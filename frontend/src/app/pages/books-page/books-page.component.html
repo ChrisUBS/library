@@ -1,0 +1,46 @@
+<section class="page-shell">
+  <div class="backdrop backdrop-left"></div>
+  <div class="backdrop backdrop-right"></div>
+
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Library Admin</p>
+      <h1>Book Manager</h1>
+      <p class="lede">CRUD básico para libros conectado a la API Spring Boot y MariaDB.</p>
+    </div>
+
+    <div class="hero-metrics">
+      <article>
+        <span>Total</span>
+        <strong>{{ totalBooks }}</strong>
+      </article>
+      <article>
+        <span>Modo</span>
+        <strong>{{ isEditing ? 'Edición' : 'Nuevo' }}</strong>
+      </article>
+      <article>
+        <span>Estado</span>
+        <strong>{{ loading() ? 'Cargando' : 'Listo' }}</strong>
+      </article>
+    </div>
+  </header>
+
+  <div class="workspace">
+    <app-book-form
+      [form]="form"
+      [isEditing]="isEditing"
+      [saving]="saving()"
+      (submitForm)="submit()"
+      (cancelEdit)="cancelEdit()"
+      (refreshBooks)="loadBooks()"
+    />
+
+    <app-books-list
+      [books]="books()"
+      [loading]="loading()"
+      [error]="error()"
+      (editBook)="edit($event)"
+      (deleteBook)="remove($event)"
+    />
+  </div>
+</section>

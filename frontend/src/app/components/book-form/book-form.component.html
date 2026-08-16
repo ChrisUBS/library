@@ -1,0 +1,66 @@
+<section class="panel form-panel">
+  <div class="panel-header">
+    <div>
+      <p class="panel-kicker">{{ isEditing ? 'Actualizar libro' : 'Crear libro' }}</p>
+      <h2>{{ isEditing ? 'Editar registro' : 'Nuevo registro' }}</h2>
+    </div>
+
+    <button type="button" class="ghost-button" (click)="refreshBooks.emit()">
+      Refrescar
+    </button>
+  </div>
+
+  <p class="panel-copy">
+    Completa los campos obligatorios y guarda el libro. El ISBN, año y descripción son opcionales.
+  </p>
+
+  <form class="book-form" (ngSubmit)="submit()">
+    <label>
+      <span>Título</span>
+      <input name="title" [(ngModel)]="form.title" placeholder="Cien años de soledad" required />
+    </label>
+
+    <label>
+      <span>Autor</span>
+      <input name="author" [(ngModel)]="form.author" placeholder="Gabriel García Márquez" required />
+    </label>
+
+    <label>
+      <span>ISBN</span>
+      <input name="isbn" [(ngModel)]="form.isbn" placeholder="9780307474728" />
+    </label>
+
+    <label>
+      <span>Año de publicación</span>
+      <input
+        name="publishedYear"
+        [(ngModel)]="form.publishedYear"
+        placeholder="1967"
+        inputmode="numeric"
+        type="number"
+      />
+    </label>
+
+    <label class="full-width">
+      <span>Descripción</span>
+      <textarea
+        name="description"
+        [(ngModel)]="form.description"
+        rows="5"
+        placeholder="Notas sobre la edición, resumen, estado de conservación..."
+      ></textarea>
+    </label>
+
+    <div class="actions full-width">
+      <button class="primary-button" type="submit" [disabled]="saving">
+        {{ saving ? 'Guardando...' : isEditing ? 'Actualizar libro' : 'Crear libro' }}
+      </button>
+
+      @if (isEditing) {
+        <button class="secondary-button" type="button" (click)="cancel()">
+          Cancelar edición
+        </button>
+      }
+    </div>
+  </form>
+</section>

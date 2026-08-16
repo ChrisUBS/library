@@ -1,0 +1,47 @@
+<section class="panel list-panel">
+  <div class="panel-header">
+    <div>
+      <p class="panel-kicker">Listado</p>
+      <h2>Libros registrados</h2>
+    </div>
+  </div>
+
+  @if (error) {
+    <div class="alert">{{ error }}</div>
+  }
+
+  @if (loading) {
+    <div class="empty-state">Cargando libros...</div>
+  } @else if (books.length === 0) {
+    <div class="empty-state">No hay libros todavía. Crea el primero desde el formulario.</div>
+  } @else {
+    <div class="book-list">
+      @for (book of books; track trackById($index, book)) {
+        <article class="book-card">
+          <div class="book-main">
+            <div class="book-meta">
+              <span class="badge">#{{ book.id }}</span>
+              @if (book.publishedYear) {
+                <span class="badge muted">{{ book.publishedYear }}</span>
+              }
+            </div>
+
+            <h3>{{ book.title }}</h3>
+            <p class="author">{{ book.author }}</p>
+            @if (book.isbn) {
+              <p class="detail"><strong>ISBN:</strong> {{ book.isbn }}</p>
+            }
+            @if (book.description) {
+              <p class="description">{{ book.description }}</p>
+            }
+          </div>
+
+          <div class="card-actions">
+            <button type="button" class="ghost-button" (click)="editBook.emit(book)">Editar</button>
+            <button type="button" class="danger-button" (click)="deleteBook.emit(book)">Eliminar</button>
+          </div>
+        </article>
+      }
+    </div>
+  }
+</section>
